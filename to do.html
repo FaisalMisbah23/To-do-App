@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+        color: #333;
+        margin: 0;
+        padding: 0;
+}
+.light-theme {
+  background-color: #fff;
+  color: #333;
+
+}
+.light-theme {
+  background-color: #fff;
+  color: #333;
+}
+
+header {
+        background-color: #2196f3;
+        color: white;
+        padding: 1px 0;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        font-size: larger;
+    }
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+} 
+
+h1 {
+    color: #333;
+    margin-left: 1rem;
+}
+
+input[type="text"] {
+    width: 94%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+}
+ input[type="time"] {
+        width: 94%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+button {
+    padding: 10px 20px;
+    background-color:  #2196f3;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type:circle;
+    padding: 0;
+}
+
+ li {
+    display: flex;
+    justify-content: space-between;
+    grid-row: auto;
+    align-items: center;
+} 
+.delete {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.complete {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.stats{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+.text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.total{
+    border: 2px solid #333;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 1rem;
+    background-color: #2196f3;
+    font-size: xx-large;
+}
+.pending{
+    border: 2px solid #333;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 1rem;
+    font-size: larger;
+    background-color: red;
+    font-size: xx-large;
+}
+.comp{
+    border: 2px solid #333;
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 1rem;
+    background-color: lightgreen;
+    font-size: xx-large;
+}
+.addTask{
+    width: 100%;
+        padding: 10px 20px;
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+}
+
+
+</style>
+<body>
+    <div class="container">
+    <header>
+        <h1> To-Do List</h1>
+        <button id="themeToggle"><i class="fas fa-adjust"></i></button>
+    </header>
+ 
+        <div class="stats">
+        <div class="total">0</div>
+        <div class="pending">0</div>
+        <div class="comp">0</div>
+    </div>
+    <div class="text">
+        <p>Tasked Added</p>
+        <p>Task Pending</p>
+        <p>Task Completed</p>
+    </div>
+    
+        
+        <input type="text" id="taskInput" placeholder="Add a new task">
+        <input type="time" id="timeInput" placeholder="add time">
+        <button class="addTask" id="addTask">Add</button>
+        <ul id="taskList">
+            <!-- Tasks will be added here dynamically -->
+        </ul>
+    </div>
+    <script>// Get elements from the DOM
+        const taskInput = document.getElementById('taskInput');
+        const timeInput = document.getElementById('timeInput');
+        const addTaskButton = document.getElementById('addTask');
+        const taskList = document.getElementById('taskList');
+        const gettotalTask=document.querySelector('.total');
+        const getpendingTask=document.querySelector('.pending');
+        const getcompTask=document.querySelector('.comp');
+
+        // Add a new task to the list
+        addTaskButton.addEventListener('click', function () {
+            const taskText = taskInput.value.trim();
+            const taskTime = timeInput.value.trim();
+            if (taskText !== '') {
+                const li = document.createElement('li');
+                li.innerHTML = `${taskTime}-
+                    ${taskText}
+                  <button   class="delete">Delete</button>
+                    <button  class="complete">Complete</button></p>
+                `;
+                taskList.appendChild(li);
+                // add one in gettotaltask
+                let ans = parseInt(gettotalTask.innerHTML) + 1;
+                gettotalTask.innerHTML = ans.toString();
+
+            
+                taskInput.value = '';
+            }
+        });
+        // Delete a task when the delete button is clicked
+        taskList.addEventListener('click', function (event) {
+            if (event.target.className === 'delete') {
+                event.target.parentElement.remove();
+        }            getpendingTask.innerHTML = document.querySelectorAll("li").length;
+        });
+        // Delete a task when the delete button is clicked
+        taskList.addEventListener('click', function (event) {
+            if (event.target.className === 'complete'){
+                alert('Task completed!');
+                event.target.parentElement.remove();
+                let ansb = parseInt(getcompTask.innerHTML) + 1;
+                getcompTask.innerHTML = ansb.toString();
+
+            }
+        });
+
+        // for light dark 
+        const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+
+themeToggle.addEventListener('click', function() {
+  body.classList.toggle('dark-theme');
+  body.classList.toggle('light-theme');
+  
+  const icon = themeToggle.querySelector('i');
+  icon.classList.toggle('fa-sun');
+  icon.classList.toggle('fa-moon');
+});
+
+
+        </script>
+</body>
+</html>
